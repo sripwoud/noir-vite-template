@@ -1,0 +1,32 @@
+name: main
+on:
+  # push trigger required to get coveralls monitoring of default branch
+  # pull_request required to get PR coveralls comments
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# no need to bother caching bun deps
+# https://github.com/oven-sh/setup-bun/issues/14#issuecomment-1714116221
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+        with:
+          mise_toml: |
+            [tasks]
+            "check:build" = { dir= "web", run = "bun vite build"}
+            "check:format" = { run = "dprint check --excludes mise.toml" }
+            "check:lint" = { run = "biome check --config-path=.biome.jsonc" }
+            "check:types" = { run = "tsc -p web/tsconfig.app.json" }
+            "check" = { depends = "check:*" }
+            [tools]
+            bun = "latest"
+            dprint = "latest"
+            "npm:@biomejs/biome" = "latest"
+            "npm:typescript" = "latest"
+      - run: bun i
+      - run: mise r check
