@@ -9,6 +9,7 @@ const plugins = [react(), tailwindcss(), TanStackRouterVite(), tsconfigPaths(), 
 
 export default defineConfig(({ mode }) => {
   return {
+    base: process.env.GITHUB_ACTIONS ? '/noir-vite-template/' : '/',
     plugins,
     server: {
       open: mode === 'development',
