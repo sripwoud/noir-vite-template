@@ -36,7 +36,6 @@
     "@noir-lang/noir_js": "^1.0.0-beta.7",
     "@noir-lang/noir_wasm": "^1.0.0-beta.8",
     "@noir-lang/noirc_abi": "^1.0.0-beta.7",
-    "comlink": "^4.4.1",
-    "vite-plugin-wasm": "^3.5.0"
+    "comlink": "^4.4.1"
   }
 }

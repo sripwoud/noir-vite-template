@@ -27,6 +27,7 @@
     "globals": "^15.14.0",
     "typescript": "~5.7.2",
     "vite": "^6.1.0",
+    "vite-plugin-wasm": "^3.5.0",
     "vite-tsconfig-paths": "^5.1.4"
   }
 }
