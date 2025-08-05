@@ -13,6 +13,7 @@ Comlink.transferHandlers.set('result', {
   canHandle: (obj: any): obj is Result<any, any> => {
     return (obj?.constructor.name === 'Ok' || obj?.constructor.name === 'Err')
   },
+  // biome-ignore lint/suspicious/noExplicitAny: Using generic type for Result
   serialize: (obj: Result<any, any>) => {
     const serialized = obj.isOk()
       ? { type: 'Ok', value: obj.inner }

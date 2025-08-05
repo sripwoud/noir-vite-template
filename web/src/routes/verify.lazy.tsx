@@ -107,19 +107,21 @@ function VerifyPage() {
           disabled={!selectedFile || isVerifying}
           type='submit'
         >
-          {isVerifying ? (
-            <div className="flex items-center justify-center gap-2">
-              <LoadingSpinner
-                color="#ffffff"
-                isLoading={true}
-                message=""
-                size={16}
-              />
-              Verifying...
-            </div>
-          ) : (
-            'Verify Proof'
-          )}
+          {isVerifying
+            ? (
+              <div className='flex items-center justify-center gap-2'>
+                <LoadingSpinner
+                  color='#ffffff'
+                  isLoading={true}
+                  message=''
+                  size={16}
+                />
+                Verifying...
+              </div>
+            )
+            : (
+              'Verify Proof'
+            )}
         </button>
       </form>
 

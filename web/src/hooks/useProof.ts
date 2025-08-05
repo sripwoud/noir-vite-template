@@ -17,7 +17,7 @@ export function useProof() {
     async (input: CircuitInput): Promise<Result<ProofResult, string>> => {
       const clientResult = await client.mapOrElse(
         async () => await initialize(),
-        async (existingClient) => new Ok(existingClient)
+        async (existingClient) => new Ok(existingClient),
       )
 
       return clientResult.andThen(async (circuitClient) => {
@@ -37,7 +37,7 @@ export function useProof() {
     async (proof: Uint8Array, publicInputs: string[]): Promise<Result<boolean, string>> => {
       const clientResult = await client.mapOrElse(
         async () => await initialize(),
-        async (existingClient) => new Ok(existingClient)
+        async (existingClient) => new Ok(existingClient),
       )
 
       return clientResult.andThen(async (circuitClient) => {

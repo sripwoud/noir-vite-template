@@ -16,7 +16,7 @@ export function useAgeProof() {
     initialize().then((result) => {
       result.mapOrElseSync(
         (error: string) => console.error('Failed to initialize circuit:', error),
-        () => undefined
+        () => undefined,
       )
     })
   }, [initialize])
@@ -25,30 +25,26 @@ export function useAgeProof() {
     if (!age || isGenerating || isVerifying) return
 
     const proofResult = await generateProof({ age })
-    await proofResult.andThen(async (result) => 
-      await verifyProof(result.proof, result.publicInputs)
-    )
+    await proofResult.andThen(async (result) => await verifyProof(result.proof, result.publicInputs))
   }, [age, generateProof, verifyProof, isGenerating, isVerifying])
 
   const reset = useCallback(() => {
     setAge('')
   }, [setAge])
 
-  // Get first available error (circuit > proof generation > proof verification)  
+  // Get first available error (circuit > proof generation > proof verification)
   const error: Result<unknown, string> = (() => {
     // Check circuit error first
     if (circuitError.isSome()) return new Err(circuitError.inner)
-    
+
     // Check proof generation error
-    if (proofGeneration.isSome() && proofGeneration.inner.isErr()) {
+    if (proofGeneration.isSome() && proofGeneration.inner.isErr())
       return proofGeneration.inner
-    }
-    
-    // Check proof verification error  
-    if (proofVerification.isSome() && proofVerification.inner.isErr()) {
+
+    // Check proof verification error
+    if (proofVerification.isSome() && proofVerification.inner.isErr())
       return proofVerification.inner
-    }
-    
+
     // No errors
     return new Ok('')
   })()

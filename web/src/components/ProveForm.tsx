@@ -20,9 +20,8 @@ export function ProveForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (canSubmit) {
+    if (canSubmit)
       await generateProof()
-    }
   }
 
   return (
@@ -63,7 +62,7 @@ export function ProveForm() {
         </button>
       </form>
 
-      <LoadingState 
+      <LoadingState
         isGenerating={isGenerating}
         isInitializing={isInitializing}
         isVerifying={isVerifying}

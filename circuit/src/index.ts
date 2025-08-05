@@ -14,6 +14,7 @@ Comlink.transferHandlers.set('result', {
       : { type: 'Err', error: obj.inner }
     return [serialized, []]
   },
+  // biome-ignore lint/suspicious/noExplicitAny: Using generic type for Result
   deserialize: (obj: any) => {
     return obj.type === 'Ok' ? new Ok(obj.value) : new Err(obj.error)
   },
