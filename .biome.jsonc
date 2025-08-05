@@ -5,6 +5,9 @@
   "assist": {
     "actions": { "source": { "organizeImports": "off", "useSortedAttributes": "on", "useSortedProperties": "on" } },
   },
+  "files": {
+    "includes": ["**", "!**/routeTree.gen.ts", "!**/dist/**", "!**/public/**"],
+  },
   // format with dprint
   "formatter": {
     "enabled": false,
@@ -17,7 +20,6 @@
   },
   "linter": {
     "enabled": true,
-    "includes": ["**", "!**/web/src/routeTree.gen.ts", "!**/dist/**"],
     "rules": {
       "complexity": {
         "useLiteralKeys": "off",
