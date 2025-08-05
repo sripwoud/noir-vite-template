@@ -33,6 +33,15 @@ dir = "web"
 run = ["bun tsc -b", "bun vite build"]
 quiet = true
 
+[tasks.build]
+alias = "b"
+description = "Build the circuit and web app"
+run = [
+  "mise r build-circuit",
+  "mise r build-web",
+]
+quiet = true
+
 [tasks.dev]
 alias = "d"
 description = "Start the dev server"

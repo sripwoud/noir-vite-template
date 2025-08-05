@@ -30,10 +30,8 @@ jobs:
           curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | bash
           echo "$HOME/.nargo/bin" >> $GITHUB_PATH
           ~/.nargo/bin/noirup
-      - name: Build circuit
-        run: mise run build-circuit
-      - name: Build web
-        run: mise run build-web
+      - name: Build
+        run: mise run build
       - uses: actions/configure-pages@v4
         with:
           enablement: true
