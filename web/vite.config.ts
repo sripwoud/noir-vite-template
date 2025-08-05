@@ -1,15 +1,21 @@
 import tailwindcss from '@tailwindcss/vite'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import wasm from 'vite-plugin-wasm'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-const plugins = [react(), tailwindcss(), TanStackRouterVite(), tsconfigPaths(), wasm()]
+const plugins = [
+  tanstackRouter({ autoCodeSplitting: true, target: 'react' }),
+  react(),
+  tailwindcss(),
+  tsconfigPaths(),
+  wasm(),
+]
 
 export default defineConfig(({ mode }) => {
   return {
-    base: process.env.GITHUB_ACTIONS ? '/noir-vite-template/' : '/',
+    base: mode === 'development' ? '/' : '/noir-vite-template/',
     plugins,
     server: {
       open: mode === 'development',
