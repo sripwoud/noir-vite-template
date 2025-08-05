@@ -1,5 +1,5 @@
 import { UltraHonkBackend } from '@aztec/bb.js'
-import { None, Some, type Option } from '@hazae41/option'
+import { None, type Option, Some } from '@hazae41/option'
 import { Err, Ok, Result } from '@hazae41/result'
 import type { CompiledCircuit } from '@noir-lang/noir_js'
 import { Noir } from '@noir-lang/noir_js'
@@ -72,7 +72,7 @@ class CircuitWorker {
         return result.mapErr(error =>
           `Proof generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`
         )
-      }
+      },
     )
   }
 
@@ -97,7 +97,7 @@ class CircuitWorker {
         return result.mapErr(error =>
           `Proof verification failed: ${error instanceof Error ? error.message : 'Unknown error'}`
         )
-      }
+      },
     )
   }
 }

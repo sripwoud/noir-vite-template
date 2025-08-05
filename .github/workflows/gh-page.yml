@@ -21,11 +21,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
       - uses: oven-sh/setup-bun@v2
       - run: bun install
-      - run: bun vite build
-        working-directory: web
+      - name: Install Noir toolchain
+        shell: bash
+        run: |
+          curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | bash
+          echo "$HOME/.nargo/bin" >> $GITHUB_PATH
+          ~/.nargo/bin/noirup
+      - name: Build circuit
+        run: mise run build-circuit
+      - name: Build web
+        run: mise run build-web
       - uses: actions/configure-pages@v4
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: "./web/dist"
