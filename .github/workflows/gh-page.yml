@@ -33,7 +33,16 @@ jobs:
       - name: Build
         env:
           CI: true
-        run: mise run build
+        run: |
+          mise run build
+          # GitHub Pages SPA routing workaround
+          # GitHub Pages doesn't natively support client-side routing for SPAs.
+          # When accessing routes like /prove directly, GitHub looks for prove.html (which doesn't exist).
+          # By copying index.html to 404.html, GitHub serves our app on any "not found" route,
+          # allowing TanStack Router to handle the routing client-side.
+          # Ref: https://github.com/rafgraph/spa-github-pages
+          # GitHub Docs: https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site
+          cp ./web/dist/index.html ./web/dist/404.html
       - uses: actions/configure-pages@v4
         with:
           enablement: true
