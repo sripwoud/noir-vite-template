@@ -1,6 +1,12 @@
-node_modules
+CLAUDE.md
 dist
+node_modules
 coverage
 lcov.info
+target
+*tsbuildinfo
 .env
-.zed
+.vscode
+.membank
+# wasm and worker file are copied during build
+web/public

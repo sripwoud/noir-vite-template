@@ -10,153 +10,89 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as QueryImport } from './routes/query'
+const VerifyLazyRouteImport = createFileRoute('/verify')()
+const ProveLazyRouteImport = createFileRoute('/prove')()
+const IndexLazyRouteImport = createFileRoute('/')()
 
-// Create Virtual Routes
-
-const StateLazyImport = createFileRoute('/state')()
-const FormLazyImport = createFileRoute('/form')()
-const IndexLazyImport = createFileRoute('/')()
-
-// Create/Update Routes
-
-const StateLazyRoute = StateLazyImport.update({
-  id: '/state',
-  path: '/state',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/state.lazy').then((d) => d.Route))
-
-const FormLazyRoute = FormLazyImport.update({
-  id: '/form',
-  path: '/form',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/form.lazy').then((d) => d.Route))
-
-const QueryRoute = QueryImport.update({
-  id: '/query',
-  path: '/query',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const IndexLazyRoute = IndexLazyImport.update({
+const VerifyLazyRoute = VerifyLazyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/verify.lazy').then((d) => d.Route))
+const ProveLazyRoute = ProveLazyRouteImport.update({
+  id: '/prove',
+  path: '/prove',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/prove.lazy').then((d) => d.Route))
+const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexLazyRoute
+  '/prove': typeof ProveLazyRoute
+  '/verify': typeof VerifyLazyRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexLazyRoute
+  '/prove': typeof ProveLazyRoute
+  '/verify': typeof VerifyLazyRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexLazyRoute
+  '/prove': typeof ProveLazyRoute
+  '/verify': typeof VerifyLazyRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/prove' | '/verify'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/prove' | '/verify'
+  id: '__root__' | '/' | '/prove' | '/verify'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexLazyRoute: typeof IndexLazyRoute
+  ProveLazyRoute: typeof ProveLazyRoute
+  VerifyLazyRoute: typeof VerifyLazyRoute
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verify': {
+      id: '/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof VerifyLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prove': {
+      id: '/prove'
+      path: '/prove'
+      fullPath: '/prove'
+      preLoaderRoute: typeof ProveLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/query': {
-      id: '/query'
-      path: '/query'
-      fullPath: '/query'
-      preLoaderRoute: typeof QueryImport
-      parentRoute: typeof rootRoute
-    }
-    '/form': {
-      id: '/form'
-      path: '/form'
-      fullPath: '/form'
-      preLoaderRoute: typeof FormLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/state': {
-      id: '/state'
-      path: '/state'
-      fullPath: '/state'
-      preLoaderRoute: typeof StateLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof IndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
-}
-
-// Create and export the route tree
-
-export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
-  '/query': typeof QueryRoute
-  '/form': typeof FormLazyRoute
-  '/state': typeof StateLazyRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
-  '/query': typeof QueryRoute
-  '/form': typeof FormLazyRoute
-  '/state': typeof StateLazyRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
-  '/query': typeof QueryRoute
-  '/form': typeof FormLazyRoute
-  '/state': typeof StateLazyRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/query' | '/form' | '/state'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/query' | '/form' | '/state'
-  id: '__root__' | '/' | '/query' | '/form' | '/state'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
-  QueryRoute: typeof QueryRoute
-  FormLazyRoute: typeof FormLazyRoute
-  StateLazyRoute: typeof StateLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  QueryRoute: QueryRoute,
-  FormLazyRoute: FormLazyRoute,
-  StateLazyRoute: StateLazyRoute,
+  ProveLazyRoute: ProveLazyRoute,
+  VerifyLazyRoute: VerifyLazyRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/query",
-        "/form",
-        "/state"
-      ]
-    },
-    "/": {
-      "filePath": "index.lazy.tsx"
-    },
-    "/query": {
-      "filePath": "query.tsx"
-    },
-    "/form": {
-      "filePath": "form.lazy.tsx"
-    },
-    "/state": {
-      "filePath": "state.lazy.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
