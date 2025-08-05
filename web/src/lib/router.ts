@@ -5,4 +5,5 @@ import { routeTree } from 'routeTree.gen'
 export const router = createRouter({
   defaultNotFoundComponent,
   routeTree,
+  basepath: import.meta.env.BASE_URL.replace(/\/$/, ''),
 })
