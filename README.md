@@ -1,5 +1,5 @@
-| <img width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" /> | WEB APP TEMPLATE |
-| ------------------------------------------------------------------------------------------------------------- | ---------------- |
+| <img width="50" src="https://noir-lang.org/img/logoDark.png" /> | NOIR VITE TEMPLATE |
+| --------------------------------------------------------------- | ------------------ |
 
 ![main GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sripwoud/web-app-template/main.yml?branch=main&label=main)
 
