@@ -26,7 +26,7 @@ export function useCircuit() {
     const newPromise = (async (): Promise<Result<CircuitClient, string>> => {
       setIsInitializing(true)
 
-      const client = new CircuitClient()
+      const client = new CircuitClient(import.meta.env.BASE_URL)
       const initResult = await client.initialize()
 
       setIsInitializing(false)

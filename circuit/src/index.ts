@@ -40,8 +40,13 @@ export class CircuitClient {
   private worker: Worker
   private api: Comlink.Remote<CircuitWorkerAPI>
 
-  constructor() {
-    this.worker = new Worker('/worker.js', { type: 'module' })
+  constructor(baseUrl = '') {
+    // Use provided base URL (from Vite's import.meta.env.BASE_URL) or default to root
+    // This ensures the worker URL works in all environments:
+    // - Local dev: baseUrl = '/' → '/worker.js'
+    // - GitHub Pages: baseUrl = '/noir-vite-template/' → '/noir-vite-template/worker.js'
+    const workerUrl = `${baseUrl}worker.js`
+    this.worker = new Worker(workerUrl, { type: 'module' })
     this.api = Comlink.wrap<CircuitWorkerAPI>(this.worker)
   }
 
