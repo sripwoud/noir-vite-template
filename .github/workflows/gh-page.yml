@@ -31,6 +31,8 @@ jobs:
           echo "$HOME/.nargo/bin" >> $GITHUB_PATH
           ~/.nargo/bin/noirup
       - name: Build
+        env:
+          CI: true
         run: mise run build
       - uses: actions/configure-pages@v4
         with:
