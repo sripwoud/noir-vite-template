@@ -23,9 +23,7 @@ run = [
   "rm -fr dist target",
   "nargo compile",
   "mise r build-circuit-*",
-  "cp dist/worker.js ../web/public/worker.js",
-  "cp ../node_modules/@noir-lang/acvm_js/web/acvm_js_bg.wasm ../web/public/acvm_js_bg.wasm",
-  "cp ../node_modules/@noir-lang/noirc_abi/web/noirc_abi_wasm_bg.wasm ../web/public/noirc_abi_wasm_bg.wasm",
+  "cp dist/worker.js target/circuit.json ../node_modules/@noir-lang/acvm_js/web/acvm_js_bg.wasm ../node_modules/@noir-lang/noirc_abi/web/noirc_abi_wasm_bg.wasm ../web/public/",
 ]
 
 [tasks.build-web]
