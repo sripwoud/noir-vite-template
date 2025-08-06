@@ -1,6 +1,6 @@
 services:
   web:
     build:
-      context: web
+      context: .
     container_name: web-template
     ports: ["80:80"]
