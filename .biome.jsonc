@@ -1,12 +1,12 @@
 {
   "root": false,
-  "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   // organize imports with dprint
   "assist": {
     "actions": { "source": { "organizeImports": "off", "useSortedAttributes": "on", "useSortedProperties": "on" } },
   },
   "files": {
-    "includes": ["**", "!**/routeTree.gen.ts", "!**/dist/**", "!**/public/**"],
+    "includes": ["**", "!**/routeTree.gen.ts", "!**/dist", "!**/public"],
   },
   // format with dprint
   "formatter": {
@@ -43,6 +43,9 @@
       },
     },
   },
+  "overrides": [
+    { "includes": ["**/*.css"], "linter": { "rules": { "suspicious": { "noUnknownAtRules": "off" } } } },
+  ],
   "vcs": {
     "enabled": true,
     "clientKind": "git",

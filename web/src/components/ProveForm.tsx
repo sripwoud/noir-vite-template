@@ -2,8 +2,10 @@ import { ErrorMessage } from 'c/ErrorMessage'
 import { LoadingState } from 'c/LoadingState'
 import { ProofResult } from 'c/ProofResult'
 import { useAgeProof } from 'h/useAgeProof'
+import { useId } from 'react'
 
 export function ProveForm() {
+  const id = useId()
   const {
     age,
     setAge,
@@ -39,7 +41,7 @@ export function ProveForm() {
           <input
             className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
             disabled={isLoading}
-            id='age'
+            id={id}
             max='150'
             min='0'
             onChange={(e) => setAge(e.target.value)}
