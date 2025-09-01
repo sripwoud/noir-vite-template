@@ -18,23 +18,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - uses: actions/checkout@v4
+      - uses: noir-lang/noirup@v0.1.4
+      - uses: oven-sh/setup-bun@v2
 
       - name: Setup mise
         uses: jdx/mise-action@v2
+        with:
+          mise_toml: |
+            [tasks]
+            build-circuit-types = { dir = "circuit", run = "tsc -p tsconfig.build.json" }
+            build-circuit-dist = { dir = "circuit", run = "bun build.ts" }
+            build-circuit = { dir = "circuit", run = ["nargo compile", "mise r build-circuit-*", "cp dist/worker.js target/circuit.json ../node_modules/@noir-lang/acvm_js/web/acvm_js_bg.wasm ../node_modules/@noir-lang/noirc_abi/web/noirc_abi_wasm_bg.wasm ../web/public/"] }
+            build-web = { dir = "web", run = ["tsc -b", "bun vite build"] }
+            build = { run = ["mise r build-circuit", "mise r build-web"] }
+            [tools]
+            "npm:typescript" = "latest"
 
       - name: Install dependencies
         run: bun install
 
-      - name: Build circuit
-        run: mise run build-circuit
-
-      - name: Build web
-        run: mise run build-web
+      - name: Build
+        run: mise r build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

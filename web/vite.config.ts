@@ -15,7 +15,6 @@ const plugins = [
 
 export default defineConfig(({ mode }) => {
   return {
-    base: process.env.CI ? '/noir-vite-template/' : '/',
     plugins,
     server: {
       open: mode === 'development',
