@@ -1,7 +1,7 @@
 [tasks.fix]
 alias = "bf"
 description = "Apply biome safe fixes and format code"
-run = ["biome check --fix --config-path=.biome.jsonc", "dprint fmt"]
+run = ["biome check --fix --config-path=biome.jsonc", "dprint fmt"]
 
 [tasks.build-circuit-types]
 dir = "circuit"
